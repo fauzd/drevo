@@ -1,0 +1,85 @@
+@mixin space-mono {
+  color: $fcolor;
+  font-family: 'Space Mono', monospace;
+  font-style: normal;
+}
+@mixin work-sans {
+  color: $fcolor;
+  font-family: 'Work Sans', sans-serif;
+  font-style: normal;
+}
+@mixin title700 {
+  font-weight: 700;
+  text-transform: capitalize;
+}
+@mixin title600 {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+@mixin text {
+  font-weight: 400;
+}
+
+@mixin sm-h1 {
+  @include space-mono;
+  @include title700;
+  font-size: 67px;
+  line-height: 110%;
+}
+@mixin sm-67 {
+  @include sm-h1;
+}
+@mixin sm-h2 {
+  @include space-mono;
+  @include title700;
+  font-size: 51px;
+  line-height: 110%;
+}
+@mixin sm-51 {
+  @include sm-h2;
+}
+@mixin sm-h3 {
+  @include space-mono;
+  @include title700;
+  font-size: 38px;
+  line-height: 120%;
+}
+@mixin sm-38 {
+  @include sm-h3;
+}
+@mixin sm-h4 {
+  @include space-mono;
+  @include title700;
+  font-size: 28px;
+  line-height: 140%;
+}
+@mixin sm-28 {
+  @include sm-h4;
+}
+@mixin sm-h5 {
+  @include space-mono;
+  @include title700;
+  font-size: 22px;
+  line-height: 160%;
+}
+@mixin sm-22 {
+  @include sm-h5;
+}
+@mixin sm-text {
+  @include space-mono;
+  @include text;
+  font-size: 16px;
+  line-height: 140%;
+}
+@mixin sm-16 {
+  @include sm-text;
+}
+@mixin sm-caption {
+  @include space-mono;
+  @include title700;
+  font-size: 12px;
+  line-height: 110%;
+}
+@mixin sm-12 {
+  @include sm-caption;
+}

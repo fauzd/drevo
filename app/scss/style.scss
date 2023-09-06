@@ -1,0 +1,122 @@
+@import "../../node_modules/scss-reset/src/scss/_reset.scss";
+@import "fonts";
+@import "variables";
+@import "mixins";
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+body {
+  color: $dark;
+  background-color: $background;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1440px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.button {
+  background: $button;
+  border-radius: 20px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+}
+.form-check {
+  position: absolute;
+  user-select: none;
+  &-input {
+    width: 60px !important;
+    height: 30px !important;
+    &:checked {
+      background-color: $accent !important;
+      border-color: $accent !important;
+    }
+  }
+}
+.dg.main.a{
+  position: absolute;
+  z-index: 1;
+}
+.hero {
+  background-color: transparent;
+  position: relative;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__arrow {
+    width: 76px;
+    height: 76px;
+    background-color: $accent;
+    border-radius: 50%;
+    padding: 11px;
+    margin-top: 76px;
+  }
+  &__subtitle {
+    font-family: "CormorantGaramond", sans-serif;
+    font-size: 51px;
+    font-weight: 300;
+    margin-bottom: 30px;
+  }
+  &__title {
+    font-family: "Novelist", sans-serif;
+    font-size: 98px;
+    text-align: center;
+    line-height: 103%;
+  }
+  &__logo {
+    position: absolute;
+    top: 45px;
+    left: 30px;
+    line-height: 103%;
+    cursor: pointer;
+  }
+  &__burger {
+    position: absolute;
+    top: 45px;
+    right: 30px;
+  }
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 64px;
+  height: 29px;
+  cursor: pointer;
+  &__line {
+    width: 64px;
+    height: 4px;
+    background-color: $dark;
+  }
+}
