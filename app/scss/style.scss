@@ -29,11 +29,26 @@ button {
   cursor: pointer;
 }
 
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body,
+html {
+  -ms-overflow-style: none;
+}
+
+body,
+html {
+  scrollbar-width: none;
+}
+
 body {
   color: $dark;
   background-color: $background;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .container {
@@ -52,6 +67,7 @@ body {
 .form-check {
   position: absolute;
   user-select: none;
+  z-index: 100;
   &-input {
     width: 60px !important;
     height: 30px !important;
@@ -61,14 +77,58 @@ body {
     }
   }
 }
-.dg.main.a{
+
+.dg.main.a {
   position: absolute;
-  z-index: 1;
+  z-index: 100;
+  visibility: hidden;
 }
+
+.info {
+  position: fixed;
+  left: 0;
+  bottom: 25%;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 100;
+  display: none;
+}
+
+.adjust__input {
+  width: 75px;
+  z-index: 100;
+}
+
+.myTitle {
+  font-family: "Novelist", sans-serif;
+  font-size: 98px;
+  text-align: center;
+  line-height: 103%;
+  text-transform: uppercase;
+  color: $text;
+}
+
+.text {
+  font-family: "CormorantGaramond";
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 132.5%;
+  color: $text;
+}
+
 .hero {
+  display: block;
+  min-height: 100vh;
+  min-width: 100vw;
   background-color: transparent;
   position: relative;
   &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -87,22 +147,16 @@ body {
     font-weight: 300;
     margin-bottom: 30px;
   }
-  &__title {
-    font-family: "Novelist", sans-serif;
-    font-size: 98px;
-    text-align: center;
-    line-height: 103%;
-  }
   &__logo {
-    position: absolute;
-    top: 45px;
+    position: fixed;
+    top: 0;
     left: 30px;
     line-height: 103%;
     cursor: pointer;
   }
   &__burger {
-    position: absolute;
-    top: 45px;
+    position: fixed;
+    top: 0;
     right: 30px;
   }
 }
@@ -118,5 +172,33 @@ body {
     width: 64px;
     height: 4px;
     background-color: $dark;
+  }
+}
+
+.approach {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  position: relative;
+  z-index: 2;
+  &__container {
+    padding: 110px;
+    flex-grow: 1;
+  }
+  &__content {
+    height: 100%;
+    margin-bottom: 110px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  &__left {
+    max-width: 555px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  &__right {
+    max-width: 470px;
   }
 }

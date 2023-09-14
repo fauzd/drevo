@@ -1,6 +1,4 @@
 import * as THREE from "three";
-import * as dat from "dat.gui";
-
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -8,302 +6,274 @@ import {
   cameraInitialPosition,
   treeInitialPosition,
   treeInitialRotation,
-  treeInitialScale,
-  cameraInitialDistance,
+  controlInitialTarget,
+  cameraInitialFOV,
 } from "./position-config.js";
 
-const canvasBackgroundColor = 0xF2F9EB;
+import { initScrollIntegration } from "./scrollIntegration";
+// import "./2dAnimations.js";
+// import { animateModel } from "./3dAnimations.js";
 
+// document.addEventListener("DOMContentLoaded", function () {
+//   initScrollIntegration();
 
+//   const scene = new THREE.Scene();
 
+//   // -----------------------делаем кастомные оси ------------
+//   // Создаем материалы для линий (осей)
+//   const redMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
+//   const greenMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+//   const blueMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff });
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+//   // Создаем геометрию для линий
+//   const geometry = new THREE.BufferGeometry().setFromPoints([
+//     new THREE.Vector3(0, 0, 0), // начальная точка
+//     new THREE.Vector3(1, 0, 0), // конечная точка
+//   ]);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+//   // Длина и толщина линий
+//   const length = 10;
+//   const thickness = 0.1;
 
-// Получаем холст и применяем к нему стили
-const canvas = renderer.domElement;
-canvas.style.position = "fixed";
-canvas.style.top = "0";
-canvas.style.left = "0";
-canvas.style.zIndex = "-1";
+//   // Создаем линии (оси)
+//   const xAxis = new THREE.Line(geometry, redMaterial);
+//   const yAxis = new THREE.Line(geometry, greenMaterial);
+//   const zAxis = new THREE.Line(geometry, blueMaterial);
 
-document.body.appendChild(canvas);
+//   // Масштабируем и трансформируем линии
+//   xAxis.scale.set(length, thickness, thickness);
+//   yAxis.scale.set(length, thickness, thickness);
+//   zAxis.scale.set(length, thickness, thickness);
 
+//   yAxis.rotation.z = Math.PI / 2;
+//   zAxis.rotation.y = Math.PI / 2;
 
-// Функция для обновления размеров рендерера и камеры
-function onWindowResize() {
-  // Обновляем размеры камеры
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+//   // Добавляем линии (оси) на сцену------------------------
+//   // scene.add(xAxis);
+//   // scene.add(yAxis);
+//   // scene.add(zAxis);
 
-  // Обновляем размер рендерера
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+//   // Горизонтальная сетка---------------------------------------
+//   const horizontalGrid = new THREE.GridHelper(100, 100);
+//   // scene.add(horizontalGrid);
 
-// Добавляем обработчик события
-window.addEventListener('resize', onWindowResize, false);
+//   // Вертикальная сетка------------------------------------------
+//   const verticalGrid = new THREE.GridHelper(100, 100);
+//   verticalGrid.rotation.x = Math.PI / 2; // Поворот на 90 градусов относительно оси X
+//   // scene.add(verticalGrid);
 
+//   // Создаем геометрию сферы с радиусом 0.125 (диаметр будет 0.25)
+//   const sphereGeometry = new THREE.SphereGeometry(0.125, 32, 32);
+//   const appleGeometry = new THREE.SphereGeometry(0.25, 32, 32);
 
-renderer.gammaFactor = 2.2;
-renderer.gammaOutput = true;
+//   // Создаем красный материал для сферы
+//   const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+//   const appleMaterial = new THREE.MeshBasicMaterial({ color: 0xc5ff3d });
 
-// Добавление Ambient Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-scene.add(ambientLight);
-scene.background = new THREE.Color(canvasBackgroundColor);
+//   // Создаем сферу
+//   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+//   const apple = new THREE.Mesh(appleGeometry, appleMaterial);
 
-// Добавление Directional Light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(0, 15, 15);
-scene.add(directionalLight);
+//   // Устанавливаем позицию сферы в начало координат
+//   sphere.position.set(0, 0, 0);
+//   apple.position.set(3, 12, 0);
 
-// Добавление Point Light
-const pointLight = new THREE.PointLight(0xffffff, 0.5);
-pointLight.position.set(0, 15, 15);
-scene.add(pointLight);
+//   // Добавляем сферу на сцену
+//   // scene.add(sphere);
+//   scene.add(apple);
 
-// const controls = new OrbitControls(camera, renderer.domElement);
-// controls.enableZoom = false; // Отключаем зум
+//   //--------------------------------------------------------
 
-//dat.GUI для создания интерфейса, который позволит в реальном времени изменять параметры объектов, света, камеры и т.д.
-  const gui = new dat.GUI();
-  // gui.add(pointLight.position, "x").min(-3).max(3).step(0.01);
-  // gui.add(pointLight.position, "y").min(-6).max(6).step(0.01);
-  // gui.add(pointLight.position, "z").min(-3).max(3).step(0.01);
+//   const canvasBackgroundColor = 0xf2f9eb;
+//   scene.background = new THREE.Color(canvasBackgroundColor);
 
-const loader = new GLTFLoader();
-let tree;
+//   const renderer = new THREE.WebGLRenderer({ antialias: true });
+//   renderer.setSize(window.innerWidth, window.innerHeight);
 
+//   // Получаем холст и применяем к нему стили
+//   const canvas = renderer.domElement;
+//   canvas.style.position = "fixed";
+//   canvas.style.top = "0";
+//   canvas.style.left = "0";
+//   canvas.style.zIndex = "-1";
 
-camera.position.set(
-  cameraInitialPosition.x,
-  cameraInitialPosition.y,
-  cameraInitialPosition.z
-);
-camera.rotation.set(0, 0, 0)
+//   document.body.appendChild(canvas);
 
+//   //--------------------Камера-------------------
+//   const camera = new THREE.PerspectiveCamera(
+//     cameraInitialFOV,
+//     window.innerWidth / window.innerHeight,
+//     0.1,
+//     1000
+//   );
 
-let cameraDistance = cameraInitialDistance; // Изначальное расстояние от камеры до центра сцены
+//   camera.position.set(
+//     cameraInitialPosition.x,
+//     cameraInitialPosition.y,
+//     cameraInitialPosition.z
+//   );
 
-// const direction = new THREE.Vector3()
-//   .subVectors(camera.position, new THREE.Vector3(0, 0, 0))
-//   .normalize();
-// camera.position.copy(direction.multiplyScalar(cameraDistance));
+//   // Функция для обновления размеров рендерера и камеры
+//   function onWindowResize() {
+//     // Обновляем размеры камеры
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
 
+//     // Обновляем размер рендерера
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//   }
 
-// Папка для позиции камеры
-const cameraFolder = gui.addFolder("Camera Position");
-cameraFolder.add(camera.position, "x").min(-100).max(100).step(1);
-cameraFolder.add(camera.position, "y").min(-100).max(100).step(1);
-cameraFolder.add(camera.position, "z").min(-100).max(100).step(1);
-let cameraDistanceController = cameraFolder
-  .add({ cameraDistance }, "cameraDistance", 1, 100, 1)
-  .name("Camera Distance")
-  .onChange(function (value) {
-    // Вычисляем новую позицию камеры на основе текущего направления
-    const direction = new THREE.Vector3()
-      .subVectors(camera.position, new THREE.Vector3(0, 0, 0))
-      .normalize();
-    camera.position.copy(direction.multiplyScalar(value));
-  });
+//   // Добавляем обработчик события
+//   window.addEventListener("resize", onWindowResize, false);
 
-// Устанавливаем начальное расстояние камеры
-const initialDirection = new THREE.Vector3()
-  .subVectors(camera.position, new THREE.Vector3(0, 0, 0))
-  .normalize();
-camera.position.copy(initialDirection.multiplyScalar(cameraInitialDistance));
+//   const controls = new OrbitControls(camera, renderer.domElement);
+//   // controls.enableZoom = false; // Отключаем зум
+//   controls.target.set(
+//     controlInitialTarget.x,
+//     controlInitialTarget.y,
+//     controlInitialTarget.z
+//   );
 
-cameraFolder.open();
+//   //--------------Загруджаем модель------------
 
+//   const loader = new GLTFLoader();
+//   let tree;
 
-// Папка для углов наклона камеры
-const cameraRotationFolder = gui.addFolder("Camera Rotation");
-cameraRotationFolder
-  .add(camera.rotation, "x")
-  .min(-Math.PI)
-  .max(Math.PI)
-  .step(0.01);
-cameraRotationFolder
-  .add(camera.rotation, "y")
-  .min(-Math.PI)
-  .max(Math.PI)
-  .step(0.01);
-cameraRotationFolder
-  .add(camera.rotation, "z")
-  .min(-Math.PI)
-  .max(Math.PI)
-  .step(0.01);
-cameraRotationFolder.open();
+//   loader.load(
+//     "models/scene.gltf",
+//     (gltf) => {
+//       tree = gltf.scene;
+//       tree.position.set(
+//         treeInitialPosition.x,
+//         treeInitialPosition.y,
+//         treeInitialPosition.z
+//       );
+//       tree.rotation.set(
+//         treeInitialRotation.x,
+//         treeInitialRotation.y,
+//         treeInitialRotation.z
+//       );
+//       scene.add(tree);
 
-loader.load(
-  "models/scene.gltf",
-  (gltf) => {
-    tree = gltf.scene;
-    tree.position.set(
-      treeInitialPosition.x,
-      treeInitialPosition.y,
-      treeInitialPosition.z
-    );
-    tree.rotation.set(
-      treeInitialRotation.x,
-      treeInitialRotation.y,
-      treeInitialRotation.z
-    );
-    tree.scale.set(treeInitialScale, treeInitialScale, treeInitialScale);
-    scene.add(tree);
+//       console.log("Model loaded");
 
-    console.log("Model loaded");
+//       // animateModel({
+//       //   model: tree,
+//       //   camera: camera,
+//       //   cameraPositionTo: { x: -18.64, y: -6.78, z: -30.73 },
+//       //   cameraFovTo: 12,
+//       //   controls: controls,
+//       //   targetTo: { x: -1.59, y: -2.16, z: -1.25 },
+//       //   scaleTo: 1,
+//       //   trigger: ".approach",
+//       // });
+//     },
+//     undefined,
+//     (error) => {
+//       console.error("An error occurred while loading the model", error);
+//     }
+//   );
 
-    // Добавляем папку для модели
-    const treeFolder = gui.addFolder("Tree Position");
-    treeFolder.add(tree.position, "x").min(-100).max(100).step(0.01);
-    treeFolder.add(tree.position, "y").min(-100).max(100).step(0.01);
-    treeFolder.add(tree.position, "z").min(-100).max(100).step(0.01);
-    treeFolder.open();
+//   //---------------------adjusting----------------
+//   // Обновление значений на экране
+//   function updateUI() {
+//     document.getElementById("cameraPositionX").value =
+//       camera.position.x.toFixed(2);
+//     document.getElementById("cameraPositionY").value =
+//       camera.position.y.toFixed(2);
+//     document.getElementById("cameraPositionZ").value =
+//       camera.position.z.toFixed(2);
 
-    let universalScale = treeInitialScale; // Изначальный масштаб
+//     document.getElementById("cameraRotationX").value =
+//       camera.rotation.x.toFixed(2);
+//     document.getElementById("cameraRotationY").value =
+//       camera.rotation.y.toFixed(2);
+//     document.getElementById("cameraRotationZ").value =
+//       camera.rotation.z.toFixed(2);
 
-    const scaleFolder = gui.addFolder("Tree Scale");
-    scaleFolder
-      .add({ universalScale }, "universalScale", 0.1, 3, 0.01)
-      .name("Universal Scale")
-      .onChange(function (value) {
-        tree.scale.set(value, value, value);
-      });
-    scaleFolder.open();
+//     document.getElementById("cameraTargetX").value =
+//       controls.target.x.toFixed(2);
+//     document.getElementById("cameraTargetY").value =
+//       controls.target.y.toFixed(2);
+//     document.getElementById("cameraTargetZ").value =
+//       controls.target.z.toFixed(2);
 
-    const folder = gui.addFolder("Tree Rotation");
-    folder.add(tree.rotation, "x", 0, Math.PI * 2).step(0.01);
-    folder.add(tree.rotation, "y", 0, Math.PI * 2).step(0.01);
-    folder.add(tree.rotation, "z", 0, Math.PI * 2).step(0.01);
-    folder.open();
-  },
-  undefined,
-  (error) => {
-    console.error("An error occurred while loading the model", error);
-  }
-);
+//     document.getElementById("cameraFOV").value = camera.fov.toFixed(2);
+//   }
 
-function animate() {
-  requestAnimationFrame(animate);
+//   // Обновление значений из полей ввода
+//   function updateFromUI() {
+//     camera.position.set(
+//       parseFloat(document.getElementById("cameraPositionX").value),
+//       parseFloat(document.getElementById("cameraPositionY").value),
+//       parseFloat(document.getElementById("cameraPositionZ").value)
+//     );
 
-  // controls.update();
-  renderer.render(scene, camera);
-}
+//     camera.rotation.set(
+//       parseFloat(document.getElementById("cameraRotationX").value),
+//       parseFloat(document.getElementById("cameraRotationY").value),
+//       parseFloat(document.getElementById("cameraRotationZ").value)
+//     );
 
-//----------Помощь----
-// Dспомогательные элементы
-const axesHelper = new THREE.AxesHelper(15);
-const gridHelper = new THREE.GridHelper(100, 10);
-const cameraHelper = new THREE.CameraHelper(camera);
-const pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
+//     controls.target.set(
+//       parseFloat(document.getElementById("cameraTargetX").value),
+//       parseFloat(document.getElementById("cameraTargetY").value),
+//       parseFloat(document.getElementById("cameraTargetZ").value)
+//     );
 
-// Добавляем их на сцену
-scene.add(axesHelper);
-scene.add(gridHelper);
-scene.add(cameraHelper);
-scene.add(pointLightHelper);
+//     camera.fov = parseFloat(document.getElementById("cameraFOV").value);
+//     camera.updateProjectionMatrix();
+//   }
 
-// Изначально делаем их невидимыми
-axesHelper.visible = false;
-gridHelper.visible = false;
-cameraHelper.visible = false;
-pointLightHelper.visible = false;
+//   // Добавляем обработчики событий для полей ввода
+//   document
+//     .getElementById("cameraPositionX")
+//     .addEventListener("input", updateFromUI);
+//   document
+//     .getElementById("cameraPositionY")
+//     .addEventListener("input", updateFromUI);
+//   document
+//     .getElementById("cameraPositionZ")
+//     .addEventListener("input", updateFromUI);
 
-function HelperVisibility() {
-  const isVisible = draggableButton.checked;
+//   document
+//     .getElementById("cameraRotationX")
+//     .addEventListener("input", updateFromUI);
+//   document
+//     .getElementById("cameraRotationY")
+//     .addEventListener("input", updateFromUI);
+//   document
+//     .getElementById("cameraRotationZ")
+//     .addEventListener("input", updateFromUI);
 
-  axesHelper.visible = isVisible;
-  gridHelper.visible = isVisible;
-  cameraHelper.visible = isVisible;
-  pointLightHelper.visible = isVisible;
+//   document
+//     .getElementById("cameraTargetX")
+//     .addEventListener("input", updateFromUI);
+//   document
+//     .getElementById("cameraTargetY")
+//     .addEventListener("input", updateFromUI);
+//   document
+//     .getElementById("cameraTargetZ")
+//     .addEventListener("input", updateFromUI);
 
-  draggablePanel.style.visibility = isVisible ? "visible" : "hidden";
-}
+//   document.getElementById("cameraFOV").addEventListener("input", updateFromUI);
 
-// Кнопка включения - перемещаем ее по странице
-const draggableButton = document.querySelector(".form-check-input");
-draggableButton.checked = axesHelper.visible;
+//   //----------------------------------------------
 
-const draggablePanel = document.querySelector(".dg.main.a");
+//   const animate = () => {
+//     requestAnimationFrame(animate);
+//     updateUI();
 
-function makeDraggable(
-  elementName,
-  element,
-  onClickFunction,
-  handleSelector = null
-) {
-  let isButtonDragging = true;
+//     // Обновление OrbitControls
+//     controls.update();
 
-  // Загрузка сохраненных координат
-  const savedCoords = JSON.parse(
-    localStorage.getItem(`${elementName}SavedCoord`)
-  );
-  const handleElement = handleSelector
-    ? element.querySelector(handleSelector)
-    : element;
-  const targetElement = element;
+//     renderer.render(scene, camera);
+//   };
 
-  if (savedCoords) {
-    targetElement.style.left = savedCoords.left + "px";
-    targetElement.style.top = savedCoords.top + "px";
-    targetElement.style.position = "fixed";
-  }
+//   // Запуск анимации
+//   animate();
+// });
 
-  handleElement.addEventListener("mousedown", function (e) {
-    isButtonDragging = false;
-    let offsetX = e.clientX - targetElement.getBoundingClientRect().left;
-    let offsetY = e.clientY - targetElement.getBoundingClientRect().top;
-
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
-
-    function onMouseMove(e) {
-      isButtonDragging = true;
-      targetElement.style.left = e.clientX - offsetX + "px";
-      targetElement.style.top = e.clientY - offsetY + "px";
-      targetElement.style.position = "fixed";
-    }
-
-    function onMouseUp() {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-
-      // Сохранение текущих координат в localStorage
-      localStorage.setItem(
-        `${elementName}SavedCoord`,
-        JSON.stringify({
-          left: parseFloat(targetElement.style.left),
-          top: parseFloat(targetElement.style.top),
-        })
-      );
-    }
-  });
-
-  // Предотвращаем клик, если было перетаскивание
-  handleElement.addEventListener("click", function (e) {
-    if (isButtonDragging) {
-      console.log("isButtonDragging", isButtonDragging);
-      e.preventDefault();
-    }
-    if (typeof onClickFunction === "function") {
-      onClickFunction();
-    }
-  });
-}
-
-
-makeDraggable ("draggableElement", draggableButton, HelperVisibility);
-makeDraggable("draggablePanel", draggablePanel, null, '.title');
-
-//-------------------------
-
-animate();
+document.addEventListener("DOMContentLoaded", function () {
+  initScrollIntegration();
+});

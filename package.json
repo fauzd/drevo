@@ -19,6 +19,7 @@
     "browserfy": "^1.0.0",
     "browserify": "^17.0.0",
     "cross-env": "^7.0.3",
+    "css-loader": "^6.8.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-avif": "^1.1.1",
@@ -36,6 +37,7 @@
     "gulp-uglify-es": "^3.0.0",
     "gulp-webp": "^4.0.1",
     "sass": "^1.63.6",
+    "style-loader": "^3.3.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "webpack": "^5.88.2",
@@ -43,7 +45,10 @@
   },
   "dependencies": {
     "dat.gui": "^0.7.9",
+    "gsap": "^3.12.2",
+    "locomotive-scroll": "^4.1.4",
     "scss-reset": "^1.4.2",
+    "splitting": "^1.0.6",
     "three": "^0.156.0"
   }
 }

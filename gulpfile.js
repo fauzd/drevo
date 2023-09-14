@@ -93,6 +93,10 @@ function scripts() {
                 },
               },
             },
+            {
+              test: /\.css$/,
+              use: ["style-loader", "css-loader"],
+            },
           ],
         },
         optimization: {
@@ -123,7 +127,10 @@ function watching() {
   });
   watch(['app/scss/style.scss'], styles)
   watch(['app/images/src'], images)
-  watch(['app/js/main.js'], scripts)
+  watch(
+    ["app/js/main.js", "app/js/2dAnimations.js", "app/js/3dAnimations.js"],
+    scripts
+  );
   watch(['app/components/*', 'app/pages/*'], pages)
   watch(['app/*.html']).on('change', browserSync.reload)
 }

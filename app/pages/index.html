@@ -1,17 +1,31 @@
 <!--=include header.html -->
 
-<main>
-  <section class="hero">
-    <div class="container hero__container">
-      <div class="form-check form-switch draggable ">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+<main data-scroll-container>
+  <section class="approach section" data-scroll-section>
+    <div class="approach__container container">
+      <div class="approach__content">
+        <div class="approach__left">
+          <h2 class="approach__left-title myTitle">ПОДХОД</h2>
+          <p class="approach__left-descr text">Наши дизайнерские решения мировой опыт и уникальные местные особенности. Специалисты нашей команды, в разных частях света, вносят в проекты свежие идеи и инновации, делая каждый проект действительно уникальным и заметным.</p>
+        </div>
+        <div class="approach__right">
+          <div class="approach__right-descr text">Благодаря глобальному присутствию, мы легко улавливаем мировые тренды и адаптируем их под ваш бренд, учитывая местные
+          особенности и потребности рынка. Мы стремимся к глубокому пониманию вашего бренда, чтобы создать дизайн, который будет
+          выделяться и узнаваться.
+          Будь то разработка продукта, брендинг или консалтинг — мы готовы помочь вам воплотить ваши амбиции в реальность.</div>
+        </div>
       </div>
+    </div>
+  </section>
+  <section class="hero section" data-scroll-section>
+    <div class="container hero__container">
       <img src="../images/logo-drevo-dark.svg" alt="" class="hero__logo">
-      <img src="../images/hero-arrow.svg" alt="" class="hero__arrow">
-      <h2 class="hero__subtitle">Вместе к вершинам</h2>
-      <h1 class="hero__title">Взращиваем зерна идей
-      для того, чтобы они стали большими брендами</h1>
+      <div class="hero__content">
+        <img src="../images/hero-arrow.svg" alt="" class="hero__arrow">
+        <h2 class="hero__subtitle">Вместе к вершинам</h2>
+        <h1 class="hero__title myTitle" data-splitting data-effect>Взращиваем зерна идей
+          для того, чтобы они стали большими брендами</h1>
+      </div>
       <div class="hero__burger burger">
         <div class="burger__line"></div>
         <div class="burger__line"></div>
@@ -19,6 +33,31 @@
       </div>
     </div>
   </section>
+  <div class="form-check form-switch draggable ">
+    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+  </div>
+  <div id="info" class="info">
+    <p>Model Position: <span id="modelPosition"></span></p>
+    <p>Model Rotation: <span id="modelRotation"></span></p>
+    <p>Model Scale: <span id="modelScale"></span></p>
+    <p>Camera Position:
+      x: <input class="adjust__input" id="cameraPositionX" type="number">
+      y: <input class="adjust__input" id="cameraPositionY" type="number">
+      z: <input class="adjust__input" id="cameraPositionZ" type="number">
+    </p>
+    <p>Camera Rotation:
+      x: <input class="adjust__input" id="cameraRotationX" type="number">
+      y: <input class="adjust__input" id="cameraRotationY" type="number">
+      z: <input class="adjust__input" id="cameraRotationZ" type="number">
+    </p>
+    <p>Camera Target:
+      x: <input class="adjust__input" id="cameraTargetX" type="number">
+      y: <input class="adjust__input" id="cameraTargetY" type="number">
+      z: <input class="adjust__input" id="cameraTargetZ" type="number">
+    </p>
+    <p>Camera FOV: <input class="adjust__input" id="cameraFOV" type="number"></p>
+  </div>
 </main>
 
 <!--=include footer.html -->
