@@ -28,12 +28,13 @@ export function animateModel({
   gsap.registerPlugin(ScrollTrigger);
 
   gsap.from(model.scale, {
+    ease: "ease-in-out",
     scrollTrigger: {
       trigger: trigger,
       start: "bottom bottom",
       end: "bottom top",
       scrub: true,
-      markers: true,
+      // markers: true,
     },
     x: scaleTo,
     y: scaleTo,

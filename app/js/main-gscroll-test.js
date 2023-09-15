@@ -6,13 +6,11 @@ import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 
 document.addEventListener("DOMContentLoaded", function () {
+
   gsap.registerPlugin(ScrollTrigger);
-  
 
-  const scroll = new GScroll("#GScroll", 0.6, () => {
-
+  const scroll = new GScroll("#GScroll", 0.3, () => {
     ScrollTrigger.update();
-    
   });
 
   scroll.init();
@@ -54,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const words = [...title.querySelectorAll(".word")];
 
     words.forEach((word) => gsap.set(word.parentNode, { perspective: 1000 }));
-
+    
     gsap.fromTo(
       words,
       {
@@ -127,10 +125,11 @@ document.addEventListener("DOMContentLoaded", function () {
         opacity: 1,
       }
     );
+  
   });
 
   ScrollTrigger.addEventListener("refresh", () => scroll.resize());
   ScrollTrigger.refresh();
 
   scroll.scrollTo("#start");
-});
+})

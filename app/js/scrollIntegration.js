@@ -1,8 +1,6 @@
-import LocomotiveScroll from "locomotive-scroll";
-import "locomotive-scroll/dist/locomotive-scroll.css";
+import GScroll from "@grcmichael/gscroll";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import  gsap  from "gsap";
-
+import gsap from "gsap";
 import Splitting from "splitting";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
@@ -10,18 +8,26 @@ import "splitting/dist/splitting-cells.css";
 export function initScrollIntegration() {
   gsap.registerPlugin(ScrollTrigger);
 
-  const scroll = new LocomotiveScroll({
-    el: document.querySelector("[data-scroll-container]"),
-    smooth: true,
+  const scroll = new GScroll(
+    "#GScroll", 
+    0.6, 
+    () => {ScrollTrigger.update();
   });
 
-  scroll.on("scroll", ScrollTrigger.update);
+  scroll.init();
+  scroll.wheel();
 
-  ScrollTrigger.scrollerProxy("[data-scroll-container]", {
+  const scroller = document.getElementById("GScroll");
+  ScrollTrigger.defaults({
+    scroller: scroller,
+  });
+
+  ScrollTrigger.scrollerProxy(scroller, {
     scrollTop(value) {
-      return arguments.length
-        ? scroll.scrollTo(value, 0, 0)
-        : scroll.scroll.instance.scroll.y;
+      if (arguments.length) {
+        scroll.current = -value; // setter
+      }
+      return -scroll.current; // getter
     },
     getBoundingClientRect() {
       return {
@@ -31,6 +37,10 @@ export function initScrollIntegration() {
         height: window.innerHeight,
       };
     },
+  });
+
+  window.addEventListener("resize", () => {
+    scroll.resize();
   });
 
   Splitting();
@@ -64,12 +74,12 @@ export function initScrollIntegration() {
         yPercent: 0,
         z: 0,
         scrollTrigger: {
-          scroller: "[data-scroll-container]",
           trigger: ".hero",
           start: "top center",
           end: "top top",
           scrub: true,
-          pin: ".hero",
+          // pin: ".hero",
+          // pin: true,
           markers: true,
         },
         stagger: {
@@ -79,56 +89,56 @@ export function initScrollIntegration() {
       }
     );
 
-    // logo&burger animations
-    const windowHeight = window.innerHeight;
-    const elementHeight = document.querySelector(".hero__logo").offsetHeight;
+    // // logo&burger animations
+    // const windowHeight = window.innerHeight;
+    // const elementHeight = document.querySelector(".hero__logo").offsetHeight;
 
-    const initialTop = 45;
-    const finalBottom = 45;
+    // const initialTop = 45;
+    // const finalBottom = 45;
 
-    const initialY = initialTop;
-    const finalY = windowHeight - elementHeight - finalBottom;
+    // const initialY = initialTop;
+    // const finalY = windowHeight - elementHeight - finalBottom;
 
-    gsap.fromTo(
-      [".hero__logo", ".hero__burger"],
-      {
-        y: finalY,
-        opacity: 0,
-      },
-      {
-        ease: "ease-in-out",
-        scrollTrigger: {
-          scroller: "[data-scroll-container]",
-          trigger: ".hero",
-          start: "top center",
-          end: "top top",
-          scrub: true,
-          // markers: true,
-        },
-        y: initialY,
-        opacity: 1,
-      }
-    );
+    // gsap.fromTo(
+    //   [".hero__logo", ".hero__burger"],
+    //   {
+    //     y: finalY,
+    //     opacity: 0,
+    //   },
+    //   {
+    //     ease: "ease-in-out",
+    //     scrollTrigger: {
+    //       scroller: "[data-scroll-container]",
+    //       trigger: ".hero",
+    //       start: "top center",
+    //       end: "top top",
+    //       scrub: true,
+    //       // markers: true,
+    //     },
+    //     y: initialY,
+    //     opacity: 1,
+    //   }
+    // );
 
-    gsap.fromTo(
-      ".hero__subtitle",
-      {
-        opacity: 0,
-      },
-      {
-        scrollTrigger: {
-          scroller: "[data-scroll-container]",
-          trigger: ".hero",
-          start: "top 25%",
-          end: "top top",
-          scrub: true,
-          // markers: true,
-        },
-        opacity: 1,
-      }
-    );
+    // gsap.fromTo(
+    //   ".hero__subtitle",
+    //   {
+    //     opacity: 0,
+    //   },
+    //   {
+    //     scrollTrigger: {
+    //       scroller: "[data-scroll-container]",
+    //       trigger: ".hero",
+    //       start: "top 25%",
+    //       end: "top top",
+    //       scrub: true,
+    //       // markers: true,
+    //     },
+    //     opacity: 1,
+    //   }
+    // );
   });
 
-  ScrollTrigger.addEventListener("refresh", () => scroll.update());
+  ScrollTrigger.addEventListener("refresh", () => scroll.resize());
   ScrollTrigger.refresh();
 }

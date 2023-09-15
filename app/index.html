@@ -20,7 +20,9 @@
     <!-- header -->
   </header>
 
-<main data-scroll-container>
+<main data-scroll-container id="GScroll">
+  <section class="projects"></section>
+  <section class="services"></section>
   <section class="approach section" data-scroll-section>
     <div class="approach__container container">
       <div class="approach__content">
@@ -37,13 +39,13 @@
       </div>
     </div>
   </section>
-  <section class="hero section" data-scroll-section>
+  <section class="hero section" id="hero" data-scroll-section>
     <div class="container hero__container">
       <img src="../images/logo-drevo-dark.svg" alt="" class="hero__logo">
-      <div class="hero__content">
+      <div class="hero__content" data-splitting data-effect>
         <img src="../images/hero-arrow.svg" alt="" class="hero__arrow">
-        <h2 class="hero__subtitle">Вместе к вершинам</h2>
-        <h1 class="hero__title myTitle" data-splitting data-effect>Взращиваем зерна идей
+        <h2 class="hero__subtitle" >Вместе к вершинам</h2>
+        <h1 class="hero__title myTitle" >Взращиваем зерна идей
           для того, чтобы они стали большими брендами</h1>
       </div>
       <div class="hero__burger burger">
@@ -53,6 +55,7 @@
       </div>
     </div>
   </section>
+  <section id="start"></section>
   <div class="form-check form-switch draggable ">
     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
     <label class="form-check-label" for="flexSwitchCheckDefault"></label>

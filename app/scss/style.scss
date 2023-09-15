@@ -48,7 +48,7 @@ body {
   color: $dark;
   background-color: $background;
   margin: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .container {
@@ -65,6 +65,7 @@ body {
   align-items: center;
 }
 .form-check {
+  display: none;
   position: absolute;
   user-select: none;
   z-index: 100;
@@ -87,11 +88,10 @@ body {
 .info {
   position: fixed;
   left: 0;
-  bottom: 25%;
+  bottom: 250px;
   font-size: 14px;
   font-weight: bold;
   z-index: 100;
-  display: none;
 }
 
 .adjust__input {
@@ -201,4 +201,14 @@ body {
   &__right {
     max-width: 470px;
   }
+}
+
+.services {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.projects {
+  min-height: 100vh;
+  min-width: 100vw;
 }

@@ -128,7 +128,12 @@ function watching() {
   watch(['app/scss/style.scss'], styles)
   watch(['app/images/src'], images)
   watch(
-    ["app/js/main.js", "app/js/2dAnimations.js", "app/js/3dAnimations.js"],
+    [
+      "app/js/main.js",
+      "app/js/2dAnimations.js",
+      "app/js/3dAnimations.js",
+      "app/js/scrollIntegration.js",
+    ],
     scripts
   );
   watch(['app/components/*', 'app/pages/*'], pages)
