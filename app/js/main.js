@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       console.log("Model loaded");
 
+      //screen 1 => 2
       animateModel({
         model: tree,
         camera: camera,
@@ -166,26 +167,88 @@ document.addEventListener("DOMContentLoaded", function () {
         trigger: ".approach",
       });
 
+      //screen 2 => 3
       animateModel({
         model: tree,
         camera: camera,
         cameraPositionTo: { x: -34.69, y: 3.31, z: 7.56 },
         cameraFovTo: 12,
         controls: controls,
-        targetTo: { x: 0.85, y: 1.23, z: 1.94 },
+        targetTo: { x: -0.85, y: 1.23, z: 1.94 },
         scaleTo: 1,
         trigger: ".services",
       });
 
+      //screen 3 => 4
       animateModel({
         model: tree,
         camera: camera,
         cameraPositionTo: { x: -5.39, y: 17.38, z: 32.33 },
         cameraFovTo: 12,
         controls: controls,
-        targetTo: { x: 0.58, y: 9.9, z: 3.91 },
+        targetTo: { x: 2.05, y: 5.06, z: 1.12 },
         scaleTo: 1,
         trigger: ".projects",
+      });
+
+      //screen 4 => 5
+      animateModel({
+        model: tree,
+        camera: camera,
+        cameraPositionTo: { x: 42.73, y: 32.50, z: 15.50 },
+        cameraFovTo: 12,
+        controls: controls,
+        targetTo: { x: 0.58, y: 9.9, z: 3.91 },
+        scaleTo: 1,
+        trigger: ".clients",
+      });
+
+      //screen 5 => 6
+      animateModel({
+        model: tree,
+        camera: camera,
+        cameraPositionTo: { x: 41.66, y: 29.9, z: -47.87 },
+        cameraFovTo: 12,
+        controls: controls,
+        targetTo: { x: -1.55, y: 10.85, z: -0.43 },
+        scaleTo: 1,
+        trigger: ".team",
+      });
+
+      //screen 6 => 7
+      animateModel({
+        model: tree,
+        camera: camera,
+        cameraPositionTo: { x: 0.38, y: -11.16, z: -4.64 },
+        cameraFovTo: 12,
+        controls: controls,
+        targetTo: { x: -1.45, y: 12.23, z: 0.4 },
+        scaleTo: 1,
+        trigger: ".contacts",
+      });
+
+      //screen 7 => fallstart
+      animateModel({
+        model: tree,
+        camera: camera,
+        cameraPositionTo: { x: -1.55, y: -10.84, z: -0.43 },
+        cameraFovTo: 100,
+        controls: controls,
+        targetTo: { x: -1.55, y: 10.85, z: -0.43 },
+        scaleTo: 1,
+        trigger: ".message",
+      });
+
+      //fall
+      animateModel({
+        model: tree,
+        camera: camera,
+        cameraPositionTo: { x: -0.46, y: -14.25, z: 0.3 },
+        cameraFovTo: 50,
+        controls: controls,
+        targetTo: { x: -0.46, y: 10.85, z: 0.3 },
+        scaleTo: 1,
+        trigger: ".fall",
       });
     },
     undefined,

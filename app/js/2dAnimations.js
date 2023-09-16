@@ -1,18 +1,17 @@
 import GScroll from "@grcmichael/gscroll";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import gsap from "gsap";
+import ScrollToPlugin from "gsap";
+
 import Splitting from "splitting";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 
 document.addEventListener("DOMContentLoaded", function () {
   gsap.registerPlugin(ScrollTrigger);
-  
 
-  const scroll = new GScroll("#GScroll", 0.6, () => {
-
+  const scroll = new GScroll("#GScroll", 0.3, () => {
     ScrollTrigger.update();
-    
   });
 
   scroll.init();

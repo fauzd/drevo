@@ -51,6 +51,11 @@ body {
   overflow: hidden;
 }
 
+section:not(#start) {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
 .container {
   max-width: 1440px;
   padding: 0 30px;
@@ -92,6 +97,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   z-index: 100;
+  display: none;
 }
 
 .adjust__input {
@@ -119,8 +125,6 @@ body {
 
 .hero {
   display: block;
-  min-height: 100vh;
-  min-width: 100vw;
   background-color: transparent;
   position: relative;
   &__container {
@@ -176,8 +180,6 @@ body {
 }
 
 .approach {
-  min-height: 100vh;
-  min-width: 100vw;
   display: flex;
   position: relative;
   z-index: 2;
@@ -201,14 +203,4 @@ body {
   &__right {
     max-width: 470px;
   }
-}
-
-.services {
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
-.projects {
-  min-height: 100vh;
-  min-width: 100vw;
 }
