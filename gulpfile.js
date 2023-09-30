@@ -130,9 +130,8 @@ function watching() {
   watch(
     [
       "app/js/main.js",
-      "app/js/2dAnimations.js",
-      "app/js/3dAnimations.js",
-      "app/js/scrollIntegration.js",
+      "app/js/animations/2d-Animations.js",
+      "app/js/animations/3d-Animations.js",
     ],
     scripts
   );

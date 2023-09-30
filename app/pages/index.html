@@ -1,6 +1,30 @@
 <!--=include header.html -->
-
-<main data-scroll-container id="GScroll">
+<div id="info" class="info">
+  <p>Model Position: <span id="modelPosition"></span></p>
+  <p>Model Rotation: <span id="modelRotation"></span></p>
+  <p>Model Scale: <span id="modelScale"></span></p>
+  <p>Camera Position:
+    x: <input class="adjust__input" id="cameraPositionX" type="number">
+    y: <input class="adjust__input" id="cameraPositionY" type="number">
+    z: <input class="adjust__input" id="cameraPositionZ" type="number">
+  </p>
+  <p>Camera Rotation:
+    x: <input class="adjust__input" id="cameraRotationX" type="number">
+    y: <input class="adjust__input" id="cameraRotationY" type="number">
+    z: <input class="adjust__input" id="cameraRotationZ" type="number">
+  </p>
+  <p>Camera Target:
+    x: <input class="adjust__input" id="cameraTargetX" type="number">
+    y: <input class="adjust__input" id="cameraTargetY" type="number">
+    z: <input class="adjust__input" id="cameraTargetZ" type="number">
+  </p>
+  <p>Camera FOV: <input class="adjust__input" id="cameraFOV" type="number"></p>
+</div>
+<div class="form-check form-switch draggable ">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+  <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+</div>
+<main id="fullpage" class="main">
   <section class="fall section">fall</section>
   <section class="message section">message</section>
   <section class="contacts section">contacts</section>
@@ -24,7 +48,7 @@
       </div>
     </div>
   </section>
-  <section class="hero section" id="hero" data-scroll-section>
+  <section class="hero section has-animation" data-scroll-section>
     <div class="container hero__container">
       <img src="../images/logo-drevo-dark.svg" alt="" class="hero__logo">
       <div class="hero__content" data-splitting data-effect>
@@ -40,32 +64,9 @@
       </div>
     </div>
   </section>
-  <section id="start"></section>
-  <div class="form-check form-switch draggable ">
-    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-  </div>
-  <div id="info" class="info">
-    <p>Model Position: <span id="modelPosition"></span></p>
-    <p>Model Rotation: <span id="modelRotation"></span></p>
-    <p>Model Scale: <span id="modelScale"></span></p>
-    <p>Camera Position:
-      x: <input class="adjust__input" id="cameraPositionX" type="number">
-      y: <input class="adjust__input" id="cameraPositionY" type="number">
-      z: <input class="adjust__input" id="cameraPositionZ" type="number">
-    </p>
-    <p>Camera Rotation:
-      x: <input class="adjust__input" id="cameraRotationX" type="number">
-      y: <input class="adjust__input" id="cameraRotationY" type="number">
-      z: <input class="adjust__input" id="cameraRotationZ" type="number">
-    </p>
-    <p>Camera Target:
-      x: <input class="adjust__input" id="cameraTargetX" type="number">
-      y: <input class="adjust__input" id="cameraTargetY" type="number">
-      z: <input class="adjust__input" id="cameraTargetZ" type="number">
-    </p>
-    <p>Camera FOV: <input class="adjust__input" id="cameraFOV" type="number"></p>
-  </div>
+  <!-- <section class="start section"id="start"></section> -->
+  
+  
 </main>
 
 <!--=include footer.html -->
