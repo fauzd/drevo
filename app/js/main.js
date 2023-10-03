@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let isVisible;
   function updateVisibility(newVisibility) {
     isVisible = newVisibility;
-    console.log("Visibility updated:", isVisible);
   }
 
   gui(updateVisibility); 
@@ -51,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         beforeLeave: function (origin, destination, direction) {
           const shouldMove = reverse2DAnimation(origin, destination, direction);
-          console.log("in main.js ", isVisible);
           if (!isVisible) {
             const shouldMove = reverse2DAnimation(
               origin,
@@ -64,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             return false;
           }
+
           play3DAnimation(destination.anchor, tree, camera, controls);
         },
       });

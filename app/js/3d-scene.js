@@ -11,6 +11,7 @@ import {
 } from "./position-config.js";
 
 import { gui } from "./gui-light";
+import { updateCameraTilt } from "./animations/cameraTilt.js";
 
 export const setupThreeDScene = () => {
 
@@ -258,6 +259,9 @@ export const setupThreeDScene = () => {
       const animate = () => {
         requestAnimationFrame(animate);
         updateUI();
+
+        // Обновление положения камеры
+        updateCameraTilt(camera, controls);
 
         // Обновление OrbitControls
         controls.update();

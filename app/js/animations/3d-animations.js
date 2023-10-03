@@ -1,4 +1,6 @@
 import { gsap } from "gsap";
+import { setInitialCameraPosition } from "./cameraTilt";
+import { resetMousePosition } from "./cameraTilt";
 
 // Объявляем таймлайн во внешней области видимости
 let sectionAnimation = gsap.timeline({ paused: true });
@@ -69,8 +71,8 @@ const animationParams = {
     ease: "ease-in-out",
   },
   message: {
-    cameraPositionTo: { x: -1.55, y: 14.0, z: -0.43 },
-    cameraFovTo: 150,
+    cameraPositionTo: { x: -1.55, y: 9.0, z: -0.43 },
+    cameraFovTo: 12,
     targetTo: { x: -1.55, y: 16.0, z: -0.43 },
     scaleTo: 1,
     delay: 0.3,
@@ -79,7 +81,7 @@ const animationParams = {
   },
   fall: {
     cameraPositionTo: { x: -1.55, y: -10.0, z: -0.43 },
-    cameraFovTo: 50,
+    cameraFovTo: 12,
     targetTo: { x: -1.55, y: 16.0, z: -0.43 },
     scaleTo: 1,
     delay: 0.3,
@@ -109,6 +111,7 @@ export function play3DAnimation(anchor, model, camera, controls) {
     )
     .add(
       gsap.to(camera.position, {
+        ease: params.ease,
         x: params.cameraPositionTo.x,
         y: params.cameraPositionTo.y,
         z: params.cameraPositionTo.z,
@@ -117,6 +120,7 @@ export function play3DAnimation(anchor, model, camera, controls) {
     )
     .add(
       gsap.to(camera, {
+        ease: params.ease,
         fov: params.cameraFovTo,
         onUpdate: () => {
           camera.updateProjectionMatrix();
@@ -126,6 +130,7 @@ export function play3DAnimation(anchor, model, camera, controls) {
     )
     .add(
       gsap.to(controls.target, {
+        ease: params.ease,
         x: params.targetTo.x,
         y: params.targetTo.y,
         z: params.targetTo.z,
@@ -134,8 +139,11 @@ export function play3DAnimation(anchor, model, camera, controls) {
       "beforeLeave"
     )
     .duration(params.duration)
-    .delay(params.delay);
+    .delay(params.delay)
+    .eventCallback("onComplete", () => {
+      resetMousePosition();
+      setInitialCameraPosition(camera);
+    });
 
   sectionAnimation.play();
 }
-

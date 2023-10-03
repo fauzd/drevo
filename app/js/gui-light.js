@@ -15,7 +15,6 @@ export function gui(callback) {
     if (callback) {
       callback(isVisible);
     }
-    console.log("in gui.js ", isVisible);
     return isVisible;
   }
 

@@ -130,6 +130,7 @@ function watching() {
   watch(
     [
       "app/js/main.js",
+      "app/js/3d-scene.js",
       "app/js/animations/2d-Animations.js",
       "app/js/animations/3d-Animations.js",
     ],
