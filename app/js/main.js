@@ -16,16 +16,39 @@ import { gui } from "./gui-light";
 
 document.addEventListener("DOMContentLoaded", function () {
   let isVisible;
+  let myFullpage; // переменная для хранения экземпляра fullpage
+
   function updateVisibility(newVisibility) {
+    // Это про отключение скролла и эффектов при включенном помощнике
     isVisible = newVisibility;
   }
 
-  gui(updateVisibility); 
-   
+  function casesVisibility () {
+    //снимаем флаги видимости с любых открытых кейсов
+    const caseElement = document.querySelector(".projects__case-1");
+    if (caseElement.classList.contains("visible")) {
+      caseElement.classList.remove("visible");
+    }
+
+    //Запрещаем прокрутку, когда курсор в пределах кейса
+    const caseElements = document.querySelectorAll(".projects__case");
+
+    caseElements.forEach((caseElement) => {
+      caseElement.addEventListener("mouseenter", function () {
+        fullpage_api.setAllowScrolling(false);
+      });
+
+      caseElement.addEventListener("mouseleave", function () {
+        fullpage_api.setAllowScrolling(true);
+      });
+    });
+  }
+
+  gui(updateVisibility);
 
   setupThreeDScene()
     .then(({ scene, camera, controls, tree }) => {
-      new fullpage("#fullpage", {
+      myFullpage = new fullpage("#fullpage", {
         anchors: [
           "fall",
           "message",
@@ -47,9 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
         scrollingSpeed: 1000,
         afterLoad: function (origin, destination, direction) {
           play2DAnimation(origin, destination, direction);
+          // origin.item.classList.add("has-animation");
         },
         beforeLeave: function (origin, destination, direction) {
-          const shouldMove = reverse2DAnimation(origin, destination, direction);
           if (!isVisible) {
             const shouldMove = reverse2DAnimation(
               origin,
@@ -65,12 +88,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
           play3DAnimation(destination.anchor, tree, camera, controls);
         },
+        onLeave: function (origin, destination, direction) {
+          casesVisibility();
+        },
       });
+      // Перемещение к нужной секции без анимации
+      // Только при первой загрузке в сессии
+      if (!sessionStorage.getItem("firstLoad")) {
+        sessionStorage.setItem("firstLoad", "done");
+        myFullpage.silentMoveTo("your-anchor");
+      }
     })
     .catch((error) => {
       console.error("Failed to setup 3D scene:", error);
     });
-
-    
-  
 });

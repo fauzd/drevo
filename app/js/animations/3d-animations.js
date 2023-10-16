@@ -141,7 +141,6 @@ export function play3DAnimation(anchor, model, camera, controls) {
     .duration(params.duration)
     .delay(params.delay)
     .eventCallback("onComplete", () => {
-      resetMousePosition();
       setInitialCameraPosition(camera);
     });
 

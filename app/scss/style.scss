@@ -46,7 +46,7 @@ html {
 
 body {
   color: $dark;
-  background-color: $background;
+  background-color: $main-light;
   margin: 0;
   overflow: visible;
 }
@@ -55,6 +55,7 @@ section:not(#start) {
   min-height: 100vh;
   min-width: 100vw;
   overflow: hidden;
+  padding: 32px 31px;
 }
 
 .container {
@@ -109,13 +110,13 @@ section:not(#start) {
   z-index: 100;
 }
 
-.myTitle {
+.my-title {
   font-family: "Novelist", sans-serif;
   font-size: 98px;
   text-align: center;
   line-height: 103%;
   text-transform: uppercase;
-  color: $text;
+  color: $main-dark;
 }
 
 .text {
@@ -124,13 +125,43 @@ section:not(#start) {
   font-style: normal;
   font-weight: 500;
   line-height: 132.5%;
-  color: $text;
+  color: $main-dark;
+}
+
+.header {
+  --header-bg: "transparent";
+  --header-blur-value: 7.5px;
+
+  position: absolute;
+  z-index: 1;
+  padding: 32px 32px 0;
+  width: 100%;
+  height: 95px;
+  display: flex;
+  justify-content: space-between;
+  background: var(--header-bg);
+  -webkit-backdrop-filter: blur(var(--header-blur-value));
+  backdrop-filter: blur(var(--header-blur-value));
+  z-index: 3;
+  &__logo {
+    line-height: 103%;
+    cursor: pointer;
+    width: 184px;
+    height: 40px;
+  }
+  &__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
 }
 
 .hero {
   display: block;
   background-color: transparent;
   position: relative;
+  z-index: 4;
   &__container {
     display: flex;
     flex-direction: column;
@@ -144,8 +175,6 @@ section:not(#start) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    
   }
   &__arrow {
     width: 76px;
@@ -160,18 +189,6 @@ section:not(#start) {
     font-size: 51px;
     font-weight: 300;
     margin-bottom: 30px;
-  }
-  &__logo {
-    position: fixed;
-    top: 0;
-    left: 30px;
-    line-height: 103%;
-    cursor: pointer;
-  }
-  &__burger {
-    position: fixed;
-    top: 0;
-    right: 30px;
   }
 }
 
@@ -214,5 +231,90 @@ section:not(#start) {
   }
   &__right {
     max-width: 470px;
+  }
+}
+
+.services {
+  &.section {
+    justify-content: flex-end;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+  &__item {
+    --height: 0px;
+    --border-radius: 0;
+    --padding-top-bottom: 21px;
+    --text-opacity: 0;
+    --transform-origin: "bottom";
+
+    display: flex;
+    justify-content: space-between;
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: var(--padding-top-bottom);
+    padding-bottom: var(--padding-top-bottom);
+    border-radius: var(--border-radius);
+    width: 100%;
+    background-color: $main-dark;
+    color: $main-light;
+    overflow: hidden;
+    transform-origin: var(--transform-origin);
+    transform: scaleY(0);
+    &-title,
+    &-description {
+      opacity: var(--text-opacity);
+    }
+    &-title {
+      @include services-title;
+      max-width: 600px;
+    }
+    &-description {
+      @include services-descripion;
+      max-width: 500px;
+    }
+  }
+}
+
+.projects {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.case {
+  height: 720px;
+  width: 900px;
+  position: absolute;
+  right: 0;
+  bottom: 32px;
+  background-color: #cccbc7;
+  border-radius: 28px;
+  padding: 60px 70px;
+  flex-direction: column;
+  justify-content: space-between;
+  display: none;
+  &.visible {
+    display: flex;
+  }
+  &__title {
+    @include project-title;
+  }
+  &__subtitle {
+    &-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      width: 80%;
+    }
+    flex-basis: auto;
+    font-size: 39px;
+    background-color: $accent;
+    border-radius: 21px;
+    padding: 10px 26px;
   }
 }

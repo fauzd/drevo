@@ -8,26 +8,26 @@ document.addEventListener("mousemove", (event) => {
   mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
-let initialCameraX, initialCameraY; // Изначальные координаты камеры
+// Устанавливаем начальные координаты камеры
+  let initialCameraX;
+  let initialCameraY;
 
-// Функция для установки новых начальных координат камеры
 export function setInitialCameraPosition(camera) {
   initialCameraX = camera.position.x;
   initialCameraY = camera.position.y;
 }
 
-export function resetMousePosition() {
-console.log("Before reset:", mouseX, mouseY); 
-  mouseX = 0;
-  mouseY = 0;
-  console.log("After reset:", mouseX, mouseY);
-}
-
 // Функция для обновления положения камеры
-export function updateCameraTilt(camera, controls, sensitivity = 0.25) {
+export function updateCameraTilt(camera, controls) {
+  // Отключаем ненужные функции
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+
   // Вычисляем новые координаты камеры на основе положения мыши
-  let targetX = initialCameraX + mouseX * sensitivity;
-  let targetY = initialCameraY + mouseY * sensitivity / 2;
+  let targetX = initialCameraX + mouseX * 0.25;
+  let targetY = initialCameraY + mouseY * 0.25;
 
   // Ограничиваем отклонение
   targetX = Math.min(
@@ -40,10 +40,9 @@ export function updateCameraTilt(camera, controls, sensitivity = 0.25) {
   );
 
   // Обновляем положение камеры
-  camera.position.x += (targetX - camera.position.x) * sensitivity;
-  camera.position.y += (targetY - camera.position.y) * sensitivity;
+  camera.position.x += (targetX - camera.position.x) * 0.25;
+  camera.position.y += (targetY - camera.position.y) * 0.25;
 
-  // Обновляем камеру и контролы
-  // camera.lookAt(controls.target);
-  // controls.update();
+  // Обновляем OrbitControls
+  controls.update();
 }
